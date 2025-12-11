@@ -54,7 +54,7 @@
                 <option value="2">Medium</option>
                 <option value="3" selected>Low</option>
             <select>
-            
+
             {% if error == "title" %}
             <p id="title-error" class="error-message">
                 {% if msg == "too_long" %}Title is too long (max 200 characters){% else %}Title is required. Please enter at least one character.{% endif %}
@@ -86,6 +86,10 @@
 
             <small id="search-hint">Filters tasks as you type; works without JavaScript.</small>
             <button type="submit">Apply Filter</button>
+
+            {# add clear filter button always visable #}
+            <a href="/tasks" role="button class="secondary>Clear Filter</a>
+
         </form>
     </section>
 
