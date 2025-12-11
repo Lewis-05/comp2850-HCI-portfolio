@@ -82,11 +82,14 @@ private suspend fun ApplicationCall.handleCreateTask(store: TaskStore) {
     timed("T3_add", jsMode()) {
         val params = receiveParameters()
         val title = params["title"]?.trim() ?: ""
+        val priority = params["priority"]?.toIntOrNull() ?: 3 
+        // had to check with AI assistive this is needed to read priority parameter
         val query = params["q"].toQuery()
 
         when (val validation = Task.validate(title)) {
             is ValidationResult.Error -> handleCreateTaskError(store, title, query, validation)
-            ValidationResult.Success -> handleCreateTaskSuccess(store, title, query)
+            ValidationResult.Success -> handleCreateTaskSuccess(store, title, priority, query)
+
         }
     }
 }
@@ -118,9 +121,10 @@ private suspend fun ApplicationCall.handleCreateTaskError(
 private suspend fun ApplicationCall.handleCreateTaskSuccess(
     store: TaskStore,
     title: String,
+    priority: Int,
     query: String,
 ) {
-    val task = Task(title = title)
+    val task = Task(title = title, priority = priority)
     store.add(task)
 
     if (isHtmxRequest()) {

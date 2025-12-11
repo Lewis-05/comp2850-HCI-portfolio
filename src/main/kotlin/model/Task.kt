@@ -21,6 +21,8 @@ data class Task(
     val title: String,
     val completed: Boolean = false,
     val createdAt: LocalDateTime = LocalDateTime.now(),
+    // adding in my priority levels feature
+    val priority: Int = 3 // default lvl 3 (least)
 ) {
     companion object {
         /**
@@ -104,7 +106,10 @@ data class Task(
             "completed" to completed,
             "createdAt" to createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
             "createdAtISO" to createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+
+            "priority" to priority,
         )
+
 }
 
 /**

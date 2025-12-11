@@ -47,6 +47,14 @@
                    placeholder="e.g., Buy milk">
 
             <small id="title-hint">Keep it short and specific.</small>
+
+            <label for="task-priority">Priority</label>
+            <select id="task-priority" name="priority">
+                <option value="1">High</option>
+                <option value="2">Medium</option>
+                <option value="3" selected>Low</option>
+            <select>
+            
             {% if error == "title" %}
             <p id="title-error" class="error-message">
                 {% if msg == "too_long" %}Title is too long (max 200 characters){% else %}Title is required. Please enter at least one character.{% endif %}

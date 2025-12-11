@@ -33,7 +33,7 @@ class TaskStore(
         private val CSV_FORMAT =
             CSVFormat.DEFAULT
                 .builder()
-                .setHeader("id", "title", "completed", "created_at")
+                .setHeader("id", "title", "completed", "created_at", "priority")
                 .setSkipHeaderRecord(true)
                 .build()
 
@@ -74,6 +74,7 @@ class TaskStore(
                             title = record[1],
                             completed = record[2].toBoolean(),
                             createdAt = LocalDateTime.parse(record[3], DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                            priority = record[4].toIntOrNull() ?: 3, // sets it to default 3 if parsing fails
                         )
                     } catch (e: IndexOutOfBoundsException) {
                         // CSV row has missing fields - skip this row
@@ -124,6 +125,7 @@ class TaskStore(
                     task.title,
                     task.completed,
                     task.createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                    task.priority,
                 )
             }
         }
@@ -213,6 +215,7 @@ class TaskStore(
                         task.title,
                         task.completed,
                         task.createdAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                        task.priority, 
                     )
                 }
             }
